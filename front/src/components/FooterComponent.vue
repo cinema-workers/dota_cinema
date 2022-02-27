@@ -1,8 +1,8 @@
 <template>
     <nav>
-      <ul>
+      <ul class="flex">
         <li><p>Dota Cinema</p></li>
-        <li class="second"><p>Санкт-Петербург</p></li>
+        <li class="mx-auto"><p>Санкт-Петербург</p></li>
         <li><img src="../assets/svg/insta.svg"></li>
         <li><img src="../assets/svg/vk.svg"></li>
         <li><img src="../assets/svg/tg.svg"></li>
@@ -18,11 +18,5 @@
     }
     nav {
       width: 100%;
-    }
-    ul {
-      display: flex;
-    }
-    .second {
-      margin: 0 auto;
     }
 </style>
