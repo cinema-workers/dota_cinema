@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="max-w-screen-xl flex justify-center flex-wrap w-full">
     <HeaderComponent />
     <router-view />
     <FooterComponent/>
