@@ -2,16 +2,16 @@
   <div id="app" class="max-w-screen-xl flex justify-center flex-wrap w-full">
     <HeaderComponent />
     <router-view />
-    <!-- <FooterComponent/> -->
+     <FooterComponent/>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "./components/HeaderComponent.vue";
-// import FooterComponent from "./components/FooterComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
   export default {
     name: "App",
-    components: { HeaderComponent }
+    components: { HeaderComponent, FooterComponent }
 }
 </script>
 

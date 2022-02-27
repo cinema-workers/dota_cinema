@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <nav class="w-full">
       <ul class="flex">
         <li><p>Dota Cinema</p></li>
         <li class="mx-auto"><p>Санкт-Петербург</p></li>
@@ -12,11 +12,4 @@
 </template>
 
 <style lang="scss" scoped>
-    img {
-      height: 1.5rem;
-      width: 1.5rem;
-    }
-    nav {
-      width: 100%;
-    }
 </style>
