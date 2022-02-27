@@ -1,19 +1,14 @@
 <template>
-<div>
-    <nav>
-    <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/">Blog</router-link></li>
-        <li><router-link to="about">About</router-link></li>
-    </ul>
+  <div class="w-full py-2 extra">
+    <nav class="w-full p-4">
+        <h1>Hello World</h1>
+      <ul class="flex flex-row w-full items-center justify-between">
+        <li><router-link to="/">Dota Cinema</router-link></li>
+        <li><router-link to="auth">Личный кабинет</router-link></li>
+      </ul>
     </nav>
-</div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-    .header {
-        height: 50px;
-        background-color: rgb(138, 123, 123);
-        width: 100%;
-    }
 </style>
