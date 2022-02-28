@@ -12,17 +12,17 @@
           </router-link>
         </li>
         <li>
-          <a href="https://www.instagram.com/government_rf/">
+          <a href="https://www.instagram.com">
             <img src="../assets/svg/insta.svg">
           </a>
         </li>
         <li>
-          <a href="https://vk.com/rogachev7">
+          <a href="https://vk.com">
             <img src="../assets/svg/vk.svg">
           </a>
         </li>
         <li>
-          <a href="https://t.me/zeykanm">
+          <a href="https://telegram.org/">
             <img src="../assets/svg/tg.svg">
           </a>
         </li>
