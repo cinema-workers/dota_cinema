@@ -9,8 +9,8 @@
     h1, h2, h3, h4 {
         @apply font-heading;
     }
-    nav img {
-        @apply h-6 w-6;
+    .footer__nav img {
+        @apply h-6 w-6 mx-1;
     }
 }
 @tailwind base;
