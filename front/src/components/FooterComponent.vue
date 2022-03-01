@@ -32,4 +32,7 @@
 </template>
 
 <style lang="scss" scoped>
+  .footer__nav img {
+    @apply h-6 w-6 mx-1;
+}
 </style>
