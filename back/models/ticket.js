@@ -1,4 +1,4 @@
-const { STRING } = require("sequelize");
+const { STRING, INTEGER } = require("sequelize");
 const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
@@ -11,11 +11,11 @@ const Ticket = sequelize.define("ticket", {
     primaryKey: true,
   },
   totalPrice: {
-    type: Number,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   seat: {
-    type: STRING,
+    type: Sequelize.STRING,
     allowNull: false,
   },
 });

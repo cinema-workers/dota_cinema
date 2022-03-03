@@ -1,6 +1,4 @@
-import path from 'path';
-
-import express from 'express';
+import express, { Application } from 'express';
 import { urlencoded } from "body-parser";
 
 import sequelize from '../util/database';
@@ -14,7 +12,8 @@ import Genre from '../models/genre';
 
 // const routes = require('./routes/cinema');
 
-const app = express();
+const app: Application = express();
+const port = 3000;
 
 app.use(urlencoded({ extended: false }));
 
@@ -38,7 +37,7 @@ Session.hasMany(Ticket, { constraints: true, onDelete: 'CASCADE' }); //кажд�
 sequelize.sync({force: true}).then(result => {
   console.log('here');
   
-  app.listen(3000);
+  app.listen(port);
 }).catch(err => {
   console.log(err);
 })
