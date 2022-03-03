@@ -20,4 +20,4 @@ const Ticket = sequelize.define("ticket", {
   },
 });
 
-module.exports = Price;
+module.exports = Ticket;

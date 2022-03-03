@@ -19,7 +19,6 @@ const Film = sequelize.define("film", {
   },
   posterUrl: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   startDate: {
     type: Sequelize.DATE,
