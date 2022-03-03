@@ -20,12 +20,19 @@ app.use(urlencoded({ extended: false }));
 
 // app.use(routes);
 
+User.hasMany(Order);
 Order.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 Order.hasOne(PaymentStatus);
-Order.belongsTo(Film);
+PaymentStatus.belongsTo(Order);
+Session.hasMany(Order);
+Order.belongsTo(Session);
 Order.hasMany(Ticket);
+Ticket.belongsTo(Order);
 Film.hasMany(Genre);
+Genre.belongsTo(Film);
 Film.hasMany(Session, { constraints: true, onDelete: 'CASCADE' });
+Session.belongsTo(Film);
+Ticket.belongsTo(Session);
 Session.hasMany(Ticket, { constraints: true, onDelete: 'CASCADE' }); //каждая сессия должна иметь места сколько в зале, чтобы их при покупке билета занимали
 
 sequelize.sync({force: true}).then(result => {
