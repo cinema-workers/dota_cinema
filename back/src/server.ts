@@ -1,8 +1,10 @@
 import path from "path";
 
 import express, { Application } from "express";
-import bodyParser, { urlencoded } from "body-parser";
+
+import bodyParser from "body-parser";
 import multer from "multer";
+import { filmCreation } from "./routes/admin/film";
 
 import sequelize from "../util/database";
 import Film from "../models/film";
@@ -13,11 +15,8 @@ import Order from "../models/order";
 import User from "../models/user";
 import Genre from "../models/genre";
 
-// const routes = require('./routes/cinema');
-
 const app: Application = express();
 const port = 3000;
-
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "../images");
@@ -42,9 +41,15 @@ const fileFilter = (req, file, cb) => {
 
 app.use(bodyParser.json());
 app.use(multer({ storage: fileStorage, fileFilter }).single("image"));
-
 app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use(routes);
+app.use((req, res, next) => {
+  console.log(req);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  next();
+})
+app.use('/admin', filmCreation);
 
 User.hasMany(Order);
 Order.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
@@ -61,22 +66,13 @@ Session.belongsTo(Film);
 Ticket.belongsTo(Session);
 Session.hasMany(Ticket, { constraints: true, onDelete: "CASCADE" }); //каждая сессия должна иметь места сколько в зале, чтобы их при покупке билета занимали
 
-sequelize
-  .sync({ force: true })
-  .then((result) => {
-    console.log("here");
-
+async function startServer() {
+  try {
+    await sequelize.sync();
     app.listen(port);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-// const port = 3000;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-// app.use('/todos', todoRoutes);
-
-// app.use((err: Error, req: express.Request, res: express.Response, next: NextFunction) => {
-//   res.status(500).json({message: err.message})
-// })
-
-// app.listen(3000);
+startServer();
