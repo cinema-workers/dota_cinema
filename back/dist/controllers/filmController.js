@@ -1,33 +1,20 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const todo_1 = require("../models/todo");
-const TODOS = [];
-exports.createTodo = (req, res, next) => {
-    const text = req.body.text;
-    const newTodo = new todo_1.Todo(Math.random().toString(), text);
-    TODOS.push(newTodo);
-    res.status(201).json({ message: 'Created the todo.', createdTodo: newTodo });
-};
-exports.getTodos = (req, res, next) => {
-    res.json({ todos: TODOS });
-};
-exports.updateTodo = (req, res, next) => {
-    const todoId = req.params.id;
-    const updatedText = req.body.text;
-    const todoIndex = TODOS.findIndex(todo => todo.id === todoId);
-    if (todoIndex < 0) {
-        throw new Error('Could not find todo!');
-    }
-    TODOS[todoIndex] = new todo_1.Todo(TODOS[todoIndex].id, updatedText);
-    res.json({ message: 'Updated!', updatedTodo: TODOS[todoIndex] });
-};
-exports.deleteTodo = (req, res, next) => {
-    const todoId = req.params.id;
-    const todoIndex = TODOS.findIndex(todo => todo.id === todoId);
-    if (todoIndex < 0) {
-        throw new Error('Could not find todo!');
-    }
-    TODOS.splice(todoIndex, 1);
-    res.json({ message: 'Todo deleted!' });
-};
+const film_1 = __importDefault(require("../../models/film"));
+exports.getFilms = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const films = yield film_1.default.findAll();
+    res.status(200).json({ films });
+});
 //# sourceMappingURL=filmController.js.map

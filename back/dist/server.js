@@ -17,8 +17,9 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const multer_1 = __importDefault(require("multer"));
 const film_1 = require("./routes/admin/film");
+const film_2 = require("./routes/film");
 const database_1 = __importDefault(require("../util/database"));
-const film_2 = __importDefault(require("../models/film"));
+const film_3 = __importDefault(require("../models/film"));
 const payment_status_1 = __importDefault(require("../models/payment-status"));
 const ticket_1 = __importDefault(require("../models/ticket"));
 const session_1 = __importDefault(require("../models/session"));
@@ -56,6 +57,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/admin', film_1.filmCreation);
+app.use('/', film_2.getHomeData);
 user_1.default.hasMany(order_1.default);
 order_1.default.belongsTo(user_1.default, { constraints: true, onDelete: "CASCADE" });
 order_1.default.hasOne(payment_status_1.default);
@@ -64,10 +66,10 @@ session_1.default.hasMany(order_1.default);
 order_1.default.belongsTo(session_1.default);
 order_1.default.hasMany(ticket_1.default);
 ticket_1.default.belongsTo(order_1.default);
-film_2.default.hasMany(genre_1.default);
-genre_1.default.belongsTo(film_2.default);
-film_2.default.hasMany(session_1.default, { constraints: true, onDelete: "CASCADE" });
-session_1.default.belongsTo(film_2.default);
+film_3.default.hasMany(genre_1.default);
+genre_1.default.belongsTo(film_3.default);
+film_3.default.hasMany(session_1.default, { constraints: true, onDelete: "CASCADE" });
+session_1.default.belongsTo(film_3.default);
 ticket_1.default.belongsTo(session_1.default);
 session_1.default.hasMany(ticket_1.default, { constraints: true, onDelete: "CASCADE" }); //каждая сессия должна иметь места сколько в зале, чтобы их при покупке билета занимали
 function startServer() {

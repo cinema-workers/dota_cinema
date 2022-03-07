@@ -5,6 +5,7 @@ import express, { Application } from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
 import { filmCreation } from "./routes/admin/film";
+import { getHomeData } from "./routes/film";
 import sequelize from "../util/database";
 import Film from "../models/film";
 import PaymentStatus from "../models/payment-status";
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
   next();
 })
 app.use('/admin', filmCreation);
+app.use('/', getHomeData)
 
 User.hasMany(Order);
 Order.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
