@@ -29,7 +29,7 @@ const app = express_1.default();
 const port = 3000;
 const fileStorage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "../images");
+        cb(null, "images");
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + "-" + file.originalname);
@@ -47,10 +47,9 @@ const fileFilter = (req, file, cb) => {
     }
 };
 app.use(body_parser_1.default.json());
-app.use(multer_1.default({ storage: fileStorage, fileFilter }).single("image"));
+app.use(multer_1.default({ storage: fileStorage, fileFilter }).single('posterUrl'));
 app.use("/images", express_1.default.static(path_1.default.join(__dirname, "images")));
 app.use((req, res, next) => {
-    console.log(req);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', '*');

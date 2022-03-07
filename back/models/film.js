@@ -14,18 +14,18 @@ const Film = sequelize.define('film', {
     allowNull: false
   },
   ageRestriction: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   },
   posterUrl: {
     type: Sequelize.TEXT
   },
   startDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.STRING,
     allowNull: false
   },
   endDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.STRING,
     allowNull: false
   }
 });

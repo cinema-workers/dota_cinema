@@ -1,34 +1,37 @@
 <script setup lang="ts">
 import axios from "axios";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { setFile } from "../utils/fileUpload";
 import { HTMLInputElement } from "../../../interfaces/events";
 
 interface Film {
   name: string;
-  ageRestriction: number | null;
-  posterUrl: string;
-  startDate: Date | null;
-  endDate: Date | null;
+  ageRestriction: string;
+  posterUrl: string | File;
+  startDate: string;
+  endDate: string;
 }
 
 let film: Film = reactive({
-  name: "",
-  ageRestriction: 0,
-  posterUrl: "",
-  startDate: null,
-  endDate: null,
+  name: '',
+  ageRestriction: '',
+  posterUrl: '',
+  startDate: '',
+  endDate: '',
 });
 
 async function createFilm() {
   const headers = {
-    "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   };
+  const formData = new FormData();
+  formData.append('name', film.name);
+  formData.append('ageRestriction', film.ageRestriction);
+  formData.append('posterUrl', film.posterUrl);
+  formData.append('startDate', film.startDate);
+  formData.append('endDate', film.endDate);
   try {
-    const res = await axios.post("http://localhost:3000/admin/film", film, {
-      headers,
-    });
+    const res = await axios.post("http://localhost:3000/admin/film", formData, { headers });
     console.log(res);
   } catch (e) {
     console.log(e);
@@ -51,7 +54,7 @@ async function createFilm() {
       ><input
         type="file"
         id="posterUrl"
-        @change="setFile($event as HTMLInputElement)"
+        @change="setFile($event as HTMLInputElement, film)"
       />
     </div>
     <div class="flex py-5">

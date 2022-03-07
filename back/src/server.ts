@@ -5,7 +5,6 @@ import express, { Application } from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
 import { filmCreation } from "./routes/admin/film";
-
 import sequelize from "../util/database";
 import Film from "../models/film";
 import PaymentStatus from "../models/payment-status";
@@ -19,7 +18,7 @@ const app: Application = express();
 const port = 3000;
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../images");
+    cb(null, "images");
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString() + "-" + file.originalname);
@@ -40,10 +39,9 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.use(bodyParser.json());
-app.use(multer({ storage: fileStorage, fileFilter }).single("image"));
+app.use(multer({ storage: fileStorage, fileFilter }).single('posterUrl'));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use((req, res, next) => {
-  console.log(req);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', '*');

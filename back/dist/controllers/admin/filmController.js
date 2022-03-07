@@ -15,14 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const film_1 = __importDefault(require("../../../models/film"));
 exports.createFilm = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const filmData = req.body;
+    if (!req.file) {
+        console.log(req, 'it is a request');
+        const error = new Error('No image provided.');
+        error.statusCode = 422;
+        throw error;
+    }
+    console.log('here!!!');
+    console.log(req.file);
+    const imageUrl = req.file.path;
+    console.log(imageUrl);
     const film = yield film_1.default.create({
         name: filmData.name,
         ageRestriction: filmData.ageRestriction,
-        posterUrl: filmData.posterUrl,
+        posterUrl: imageUrl,
         startDate: filmData.startDate,
         endDate: filmData.endDate
     });
     console.log(film);
-    res.status(201).json({ message: 'Created the todo.', createdFilm: film });
+    res.status(201).json({ message: 'Film added.', createdFilm: film });
 });
 //# sourceMappingURL=filmController.js.map
