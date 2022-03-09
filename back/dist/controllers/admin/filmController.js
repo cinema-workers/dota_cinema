@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const film_1 = __importDefault(require("../../../models/film"));
+const genre_1 = __importDefault(require("../../../models/genre"));
 exports.createFilm = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const filmData = req.body;
     if (!req.file) {
@@ -21,7 +22,6 @@ exports.createFilm = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         error.statusCode = 422;
         throw error;
     }
-    console.log('here!!!');
     console.log(req.file);
     const imageUrl = req.file.path;
     console.log(imageUrl);
@@ -34,5 +34,9 @@ exports.createFilm = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     });
     console.log(film);
     res.status(201).json({ message: 'Film added.', createdFilm: film });
+});
+exports.getGenre = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const genres = yield genre_1.default.findAll();
+    res.status(200).json({ genres });
 });
 //# sourceMappingURL=filmController.js.map

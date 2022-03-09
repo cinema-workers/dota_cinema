@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import Film from '../../../models/film';
-import { FilmModel } from '../../interfaces/models'; 
+import Genre from '../../../models/genre';
 import { ErrorException } from '../../interfaces/events';
 
 export const createFilm = async (req: Express.Multer.File & Request, res: Response, next: NextFunction) => { 
@@ -12,7 +12,6 @@ export const createFilm = async (req: Express.Multer.File & Request, res: Respon
         error.statusCode = 422;
         throw error;
     }
-    console.log('here!!!');
     console.log(req.file);
     
     const imageUrl: string = req.file.path;
@@ -27,4 +26,9 @@ export const createFilm = async (req: Express.Multer.File & Request, res: Respon
     });
     console.log(film);
     res.status(201).json({ message: 'Film added.', createdFilm: film });
+}
+
+export const getGenre: RequestHandler = async (req, res, next) => {
+    const genres = await Genre.findAll();
+    res.status(200).json({ genres })
 }

@@ -57,6 +57,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/admin', film_1.filmCreation);
+app.use('/admin', film_1.getGenres);
 app.use('/', film_2.getHomeData);
 user_1.default.hasMany(order_1.default);
 order_1.default.belongsTo(user_1.default, { constraints: true, onDelete: "CASCADE" });

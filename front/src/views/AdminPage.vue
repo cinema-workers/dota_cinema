@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import { reactive, ref } from "vue";
+import { reactive, onBeforeMount } from "vue";
 import { setFile } from "../utils/fileUpload";
 import { HTMLInputElement } from "../../../interfaces/events";
 
@@ -11,32 +11,74 @@ interface Film {
   startDate: string;
   endDate: string;
 }
+interface Genre {
+  id: number;
+  name: string;
+  filmId: null | number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 let film: Film = reactive({
-  name: '',
-  ageRestriction: '',
-  posterUrl: '',
-  startDate: '',
-  endDate: '',
+  name: "",
+  ageRestriction: "",
+  posterUrl: "",
+  startDate: "",
+  endDate: "",
 });
+
+onBeforeMount( async () => {
+  genres = await getGenres();
+  console.log(genres);
+} );
 
 async function createFilm() {
   const headers = {
     "Access-Control-Allow-Origin": "*",
   };
   const formData = new FormData();
-  formData.append('name', film.name);
-  formData.append('ageRestriction', film.ageRestriction);
-  formData.append('posterUrl', film.posterUrl);
-  formData.append('startDate', film.startDate);
-  formData.append('endDate', film.endDate);
+  formData.append("name", film.name);
+  formData.append("ageRestriction", film.ageRestriction);
+  formData.append("posterUrl", film.posterUrl);
+  formData.append("startDate", film.startDate);
+  formData.append("endDate", film.endDate);
   try {
-    const res = await axios.post("http://localhost:3000/admin/film", formData, { headers });
+    const res = await axios.post("http://localhost:3000/admin/film", formData, {
+      headers,
+    });
     console.log(res);
   } catch (e) {
     console.log(e);
   }
 }
+
+// let genres: Genre[] | [];
+let genres: Genre[] | [];
+async function getGenres(): Promise<Genre[] | []> {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+  };
+  try {
+    const response = await axios.get("http://localhost:3000/admin/genres", {
+      headers,
+    });
+    console.log(response);
+    return response?.data
+      ? response.data.genres
+      : []
+    // if (response?.data) {
+    //   ({ genres } = response.data);
+    //   console.log(genres)
+    //   return;
+    // } genres = [];
+    // console.log(genres)
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+}
+// const loadData = async () => genres = await getGenres();
+// loadData()
 </script>
 
 <template>
@@ -77,6 +119,13 @@ async function createFilm() {
         v-model="film.endDate"
       />
     </div>
+    <select multiple v-if="genres.length">
+      <option
+        v-for="genre in genres"
+        :key="genre.name + genre.id"
+        :value="genre.name"
+      ></option>
+    </select>
     <button @click="createFilm">SAVE FILM</button>
   </div>
 </template>

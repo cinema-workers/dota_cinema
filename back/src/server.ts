@@ -4,7 +4,7 @@ import express, { Application } from "express";
 
 import bodyParser from "body-parser";
 import multer from "multer";
-import { filmCreation } from "./routes/admin/film";
+import { filmCreation, getGenres } from "./routes/admin/film";
 import { getHomeData } from "./routes/film";
 import sequelize from "../util/database";
 import Film from "../models/film";
@@ -14,6 +14,7 @@ import Session from "../models/session";
 import Order from "../models/order";
 import User from "../models/user";
 import Genre from "../models/genre";
+import { getGenre } from "./controllers/admin/filmController";
 
 const app: Application = express();
 const port = 3000;
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
   next();
 })
 app.use('/admin', filmCreation);
+app.use('/admin', getGenres);
 app.use('/', getHomeData)
 
 User.hasMany(Order);
