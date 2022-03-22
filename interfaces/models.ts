@@ -1,7 +1,14 @@
-interface Film {
-    name: string;
-    ageRestriction: number | null;
-    posterUrl: string;
-    startDate: Date | null;
-    endDate: Date | null;
+export interface Film {
+  name: string;
+  ageRestriction: string;
+  posterUrl: string;
+  startDate: string;
+  genres: Genre[];
+  endDate: string;
+}
+export interface Genre {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -3,34 +3,21 @@ import axios from "axios";
 import { reactive, onBeforeMount } from "vue";
 import { setFile } from "../utils/fileUpload";
 import { HTMLInputElement } from "../../../interfaces/events";
-
-interface Film {
-  name: string;
-  ageRestriction: string;
-  posterUrl: string | File;
-  startDate: string;
-  endDate: string;
-}
-interface Genre {
-  id: number;
-  name: string;
-  filmId: null | number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Film, Genre } from "../../../interfaces/models";
 
 let film: Film = reactive({
   name: "",
   ageRestriction: "",
   posterUrl: "",
   startDate: "",
+  genres: null,
   endDate: "",
 });
+let genres: { value: Genre[] } = reactive({ value: [] })
 
-onBeforeMount( async () => {
-  genres = await getGenres();
-  console.log(genres);
-} );
+onBeforeMount(async () => {
+  genres.value = await getGenres();
+});
 
 async function createFilm() {
   const headers = {
@@ -42,6 +29,7 @@ async function createFilm() {
   formData.append("posterUrl", film.posterUrl);
   formData.append("startDate", film.startDate);
   formData.append("endDate", film.endDate);
+  formData.append("genres", JSON.stringify(film.genres));
   try {
     const res = await axios.post("http://localhost:3000/admin/film", formData, {
       headers,
@@ -52,8 +40,6 @@ async function createFilm() {
   }
 }
 
-// let genres: Genre[] | [];
-let genres: Genre[] | [];
 async function getGenres(): Promise<Genre[] | []> {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -62,23 +48,13 @@ async function getGenres(): Promise<Genre[] | []> {
     const response = await axios.get("http://localhost:3000/admin/genres", {
       headers,
     });
-    console.log(response);
-    return response?.data
-      ? response.data.genres
-      : []
-    // if (response?.data) {
-    //   ({ genres } = response.data);
-    //   console.log(genres)
-    //   return;
-    // } genres = [];
-    // console.log(genres)
+    console.log(response, "after getGenres call");
+    return response?.data ? reactive(response.data.genres) : reactive([]);
   } catch (e) {
     console.log(e);
     return [];
   }
 }
-// const loadData = async () => genres = await getGenres();
-// loadData()
 </script>
 
 <template>
@@ -119,12 +95,10 @@ async function getGenres(): Promise<Genre[] | []> {
         v-model="film.endDate"
       />
     </div>
-    <select multiple v-if="genres.length">
-      <option
-        v-for="genre in genres"
-        :key="genre.name + genre.id"
-        :value="genre.name"
-      ></option>
+    <select multiple v-model="film.genres">
+      <option v-for="genre in genres.value" :key="genre.name" :value="genre">
+        {{ genre.name }}
+      </option>
     </select>
     <button @click="createFilm">SAVE FILM</button>
   </div>

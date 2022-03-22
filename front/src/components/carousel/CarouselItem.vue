@@ -1,21 +1,23 @@
 <script setup lang="ts">
+import { Genre } from "../../../../interfaces/models";
 interface Props {
     url: string,
-    types: string[],
+    genres: Genre[],
     name: string,
 }
 const props = defineProps<Props>();
-const filmTypes = props.types.join(',');
+// const filmTypes = props.genres.join(',');
+console.log(props.genres);
 </script>
 
 <template>
     <div class="flex flex-col justify-center items-start first:ml-0 mx-2 last:mr-0 w-56">
         <div class="special-box-shadow h-80 w-52 mb-2">
-            <img :src="require(`@/assets/posters/${props.url}`)" alt="" class="block w-full h-full"/>  
+            <img :src="require(`../../../../back/${props.url}`)" alt="" class="block w-full h-full"/>  
         </div>
         <div class="text-center w-full">
             <h2>{{ props.name }}</h2>
-            <p class="break-all">{{ filmTypes }}</p>
+            <p class="break-all">{{ 'kek' }}</p>
         </div>
     </div>
 </template>

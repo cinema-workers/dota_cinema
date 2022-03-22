@@ -13,8 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const film_1 = __importDefault(require("../../models/film"));
+const genre_1 = __importDefault(require("../../models/genre"));
 exports.getFilms = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const films = yield film_1.default.findAll();
+    const films = yield film_1.default.findAll({ include: genre_1.default });
     res.status(200).json({ films });
 });
 //# sourceMappingURL=filmController.js.map
