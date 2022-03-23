@@ -10,7 +10,7 @@ let film: Film = reactive({
   ageRestriction: "",
   posterUrl: "",
   startDate: "",
-  genres: null,
+  genres: [],
   endDate: "",
 });
 let genres: { value: Genre[] } = reactive({ value: [] })
